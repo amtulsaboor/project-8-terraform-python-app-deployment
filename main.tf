@@ -1,6 +1,7 @@
 resource "aws_key_pair" "example" {
   key_name   = "app-deploy-key"
   public_key = "/Users/amtulsaboor/.ssh/id_rsa.pub"
+}
 
 resource "aws_vpc" "myvpc" {
   cidr_block = "10.0.0.0/16"
@@ -54,6 +55,7 @@ egress {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
   }
+}
 
 resource "aws_instance" "server" {
   ami           = "ami-091138d0f0d41ff90"
