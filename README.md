@@ -37,8 +37,49 @@ cd terraform-app-deploy
 <img width="1710" height="1107" alt="Screenshot 2026-05-17 at 11 52 22 PM" src="https://github.com/user-attachments/assets/a2e91c99-f9ec-4728-80c8-82692f9939ad" />
 
 ---
+Yes — that’s an important missing step. Since you’re launching an Amazon Web Services EC2 instance, you typically need an SSH key pair to access the server (unless you’re relying only on `user_data`, but for real-world projects recruiters expect to see SSH setup).
 
-# Step 2: Create Python Application File
+Add this section **right after Step 1: Create Project Directory** and before creating `app.py`.
+
+---
+
+# Step 2: Generate SSH Key Pair
+
+Create a new SSH key pair:
+
+```bash
+ssh-keygen -t rsa
+```
+
+Press Enter for the default file location:
+
+```bash
+/Users/your-name/.ssh/id_rsa
+```
+
+Press Enter again if you want to skip passphrase.
+
+This will generate:
+
+* `id_rsa` → Private key
+* `id_rsa.pub` → Public key
+
+Verify:
+
+```bash
+ls ~/.ssh
+```
+
+Output:
+
+```bash
+id_rsa
+id_rsa.pub
+```
+
+---
+
+# Step 3: Create Python Application File
 
 Create app file:
 
@@ -60,7 +101,7 @@ if __name__ == '__main__':
 ```
 ---
 
-# Step 3: Create Provider Configuration
+# Step 4: Create Provider Configuration
 
 ```bash
 vim provider.tf
@@ -75,7 +116,7 @@ provider "aws" {
 ```
 ---
 
-# Step 4: Create Main Terraform File
+# Step 5: Create Main Terraform File
 
 ```bash
 vim main.tf
@@ -176,7 +217,7 @@ resource "aws_instance" "server" {
 ```
 ---
 
-# Step 5: Initialize Terraform
+# Step 6: Initialize Terraform
 
 ```bash
 terraform init
@@ -184,7 +225,7 @@ terraform init
 
 ---
 
-# Step 6: Preview Infrastructure
+# Step 7: Preview Infrastructure
 
 ```bash
 terraform plan
@@ -197,7 +238,7 @@ Shows resources Terraform will create.
 
 ---
 
-# Step 7: Deploy Infrastructure
+# Step 8: Deploy Infrastructure
 
 ```bash
 terraform apply
@@ -218,7 +259,7 @@ Terraform will create:
 
 ---
 
-# Step 8: Access Application
+# Step 9: Access Application
 
 Open browser:
 
@@ -252,7 +293,7 @@ terraform-python-app/
 
 ---
 
-# Destroy Resources
+# Step 10: Destroy Resources
 
 To avoid AWS charges:
 
