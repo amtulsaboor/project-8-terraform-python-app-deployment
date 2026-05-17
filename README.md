@@ -34,15 +34,7 @@ git --version
 mkdir terraform-app-deploy
 cd terraform-app-deploy
 ```
-<img width="1710" height="1107" alt="Screenshot 2026-05-17 at 11 52 22 PM" src="https://github.com/user-attachments/assets/a2e91c99-f9ec-4728-80c8-82692f9939ad" />
-
 ---
-Yes — that’s an important missing step. Since you’re launching an Amazon Web Services EC2 instance, you typically need an SSH key pair to access the server (unless you’re relying only on `user_data`, but for real-world projects recruiters expect to see SSH setup).
-
-Add this section **right after Step 1: Create Project Directory** and before creating `app.py`.
-
----
-
 # Step 2: Generate SSH Key Pair
 
 Create a new SSH key pair:
@@ -76,6 +68,7 @@ Output:
 id_rsa
 id_rsa.pub
 ```
+<img width="1710" height="1107" alt="Screenshot 2026-05-17 at 11 52 22 PM" src="https://github.com/user-attachments/assets/35d8dedb-a566-4b46-94dc-1b55554b35bc" />
 
 ---
 
