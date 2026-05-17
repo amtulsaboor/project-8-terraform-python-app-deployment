@@ -1,6 +1,6 @@
 resource "aws_key_pair" "example" {
   key_name   = "app-deploy-key"
-  public_key = "/Users/amtulsaboor/.ssh/id_rsa.pub"
+  public_key = file("/Users/amtulsaboor/.ssh/id_rsa.pub")
 }
 
 resource "aws_vpc" "myvpc" {
@@ -62,12 +62,12 @@ resource "aws_instance" "server" {
   instance_type = "t2.micro"
   key_name = aws_key_pair.example.key_name
   subnet_id   = aws_subnet.sub1.id
-  vpc_security_group_ids = aws_security_group.websg.id
+  vpc_security_group_ids = [aws_security_group.websg.id]
 
  connection {
     type = "ssh"
     user = "ubuntu"
-    private_key = "/Users/amtulsaboor/.ssh/id_rsa.pub"
+    private_key = file("/Users/amtulsaboor/.ssh/id_rsa")
     host = self.public_ip
  }
 
@@ -77,13 +77,13 @@ resource "aws_instance" "server" {
  }
 
  provisioner "remote-exec" {
-   incline = [
-     "echo 'Hello from remote instance'",
-     "sudo apt update -y",
-     "sudo apt-get install -y python3-pip",
-     "sudo pip3 install flask",
-     "sudo python3 app.py",
-   ]
- }
+  inline = [
+    "echo 'Hello from remote instance'",
+    "sudo apt update -y",
+    "sudo apt-get install -y python3-venv",
+    "python3 -m venv /home/ubuntu/venv",
+    "/home/ubuntu/venv/bin/pip install flask",
+    "sudo bash -c 'nohup /home/ubuntu/venv/bin/python /home/ubuntu/app.py > /home/ubuntu/app.log 2>&1 &'"
+  ]
 }
-
+}
